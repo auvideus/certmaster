@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 	"github.com/auvideus/certmaster"
 	"flag"
 )
@@ -16,8 +15,7 @@ func main() {
 
 	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
-		log.Fatal("error: %v", err)
-		os.Exit(1)
+		log.Fatalln("could not read config file: ", err)
 	}
 
 	err = certmaster.CreateChallengeRecord(config)

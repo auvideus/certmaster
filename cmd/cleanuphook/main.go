@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/auvideus/certmaster"
 	"log"
-	"os"
 	"flag"
 )
 
@@ -16,12 +15,11 @@ func main() {
 
 	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
-		log.Fatal("error: %v", err)
-		os.Exit(1)
+		log.Fatalln("could not read config file: ", err)
 	}
 
 	err = certmaster.DeleteChallengeRecord(config)
 	if err != nil {
-		log.Fatalln("error deleting challenge record", err)
+		log.Fatalln("error deleting challenge record: ", err)
 	}
 }
