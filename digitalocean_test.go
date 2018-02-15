@@ -3,7 +3,6 @@ package certmaster
 import (
 	"os"
 	"testing"
-	"time"
 	"flag"
 )
 
@@ -28,13 +27,13 @@ func createConfig(t *testing.T) *Config {
 	os.Setenv("CERTBOT_DOMAIN", domain)
 	os.Setenv("CERTBOT_VALIDATION", "testval")
 	config := Config{
-		Meta: Meta_S{
+		Meta: Meta{
 			Email: email,
 		},
-		Digital_Ocean: Digital_Ocean_S{
+		Digital_Ocean: DigitalOcean{
 			Token: token,
 		},
-		Domains: []Domain_S{
+		Domains: []Domain{
 			{
 				Name: domain,
 			},

@@ -7,25 +7,25 @@ import (
 	"log"
 )
 
-type Domain_S struct {
+type Domain struct {
 	Name string
 	Subdomains []string
 }
 
-type Digital_Ocean_S struct {
+type DigitalOcean struct {
 	Token string
 }
 
-type Meta_S struct {
+type Meta struct {
 	Email string
 	Poll_Interval string
 	Dry_Run bool
 }
 
 type Config struct {
-	Meta Meta_S
-	Digital_Ocean Digital_Ocean_S
-	Domains []Domain_S
+	Meta          Meta
+	Digital_Ocean DigitalOcean
+	Domains       []Domain
 }
 
 func ReadYamlFile(file string) (c *Config, err error) {

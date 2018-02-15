@@ -27,15 +27,15 @@ func TestValidFile(t *testing.T) {
 	config, _ := ReadYamlFile("./resources/certmaster_valid.yml")
 
 	cmp := Config{
-		Meta: Meta_S{
+		Meta: Meta{
 			Email: "someguy@example.com",
 			Poll_Interval: "5s",
 			Dry_Run: true,
 		},
-		Digital_Ocean: Digital_Ocean_S{
+		Digital_Ocean: DigitalOcean{
 			Token: "token1",
 		},
-		Domains: []Domain_S{
+		Domains: []Domain{
 			{
 				Name: "example.com",
 				Subdomains: []string{
@@ -55,10 +55,10 @@ func TestIncompleteFile(t *testing.T) {
 	config, _ := ReadYamlFile("./resources/certmaster_incomplete.yml")
 
 	cmp := Config{
-		Digital_Ocean: Digital_Ocean_S{
+		Digital_Ocean: DigitalOcean{
 			Token: "",
 		},
-		Domains: []Domain_S{
+		Domains: []Domain{
 			{
 				Name: "example.com",
 				Subdomains: []string{},
