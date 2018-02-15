@@ -3,6 +3,8 @@ package certmaster
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
+	"time"
+	"log"
 )
 
 type Domain_S struct {
@@ -36,4 +38,19 @@ func ReadYamlFile(file string) (c *Config, err error) {
 		return nil, err2
 	}
 	return c, nil
+}
+
+func GetPollInterval(config *Config) (time.Duration) {
+	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
+	if err != nil {
+		log.Println("misconfigured poll interval, setting to 5s")
+		duration, _ = time.ParseDuration("5s")
+		return duration
+	}
+	tooShort := int64(duration) * 1000000 < 5
+	if tooShort {
+		log.Println("poll interval too short, setting to 5s")
+		duration, _ = time.ParseDuration("5s")
+	}
+	return duration
 }
