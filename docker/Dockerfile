@@ -10,14 +10,13 @@ RUN yum -y install \
     golang
 
 RUN go get \
-    github.com/digitalocean/godo \
-    github.com/digitalocean/godo/context \
-    github.com/auvideus/certmaster/src
-    golang.org/x/oauth2
+    github.com/auvideus/certmaster/cmd/certmaster \
+    github.com/auvideus/certmaster/cmd/authhook \
+    github.com/auvideus/certmaster/cmd/cleanuphook
 
-ADD hook/certbot.go /opt/certbot.go
 ADD pre.sh /opt/pre.sh
 ADD post.sh /opt/post.sh
 
-CMD ["/usr/bin/go", "run", "/opt/certbot.go", "loop"]
-#CMD ["/bin/bash"]
+ENV PATH /root/go/bin:$PATH
+
+CMD ["certmaster"]
