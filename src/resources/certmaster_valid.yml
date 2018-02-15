@@ -1,0 +1,11 @@
+---
+meta:
+  email: someguy@example.com
+  poll_interval: 5
+digital_ocean:
+  token: token1
+domains:
+- name: example.com
+  subdomains:
+  - app.example.com
+- name: example2.com

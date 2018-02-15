@@ -1,5 +1,7 @@
 FROM centos:7
 
+VOLUME /etc/letsencrypt
+
 RUN yum -y install epel-release
 
 RUN yum -y install \
@@ -10,6 +12,7 @@ RUN yum -y install \
 RUN go get \
     github.com/digitalocean/godo \
     github.com/digitalocean/godo/context \
+    github.com/auvideus/certmaster
     golang.org/x/oauth2
 
 ADD hook/certbot.go /opt/certbot.go
