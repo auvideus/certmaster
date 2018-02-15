@@ -1,8 +1,8 @@
 ---
 meta:
   email: someguy@example.com
-  pollInterval: 5
-  dryRun: true
+  poll_interval: "5s"
+  dry_run: true
 digital_ocean:
   token: token1
 domains:

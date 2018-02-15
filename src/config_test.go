@@ -3,22 +3,21 @@ package src
 import (
 	"testing"
 	"reflect"
-	"fmt"
 )
 
 func compare(t *testing.T, fromFile *Config, fromCode *Config, equal bool) {
 	if !reflect.DeepEqual(fromFile, fromCode) {
 		if equal {
-			fmt.Println("Mismatch between read(1) and expected(2):")
-			fmt.Printf("-- (file): %+v\n", *fromFile)
-			fmt.Printf("-- (code): %+v\n", *fromCode)
+			t.Log("Mismatch between read and expected:",
+				"\n-- (file): ", *fromFile,
+			    "\n-- (code): ", *fromCode)
 			t.Fail()
 		}
 	} else {
 		if !equal {
-			fmt.Println("Data structures were equal:")
-			fmt.Printf("-- (file): %+v\n", *fromFile)
-			fmt.Printf("-- (code): %+v\n", *fromCode)
+			t.Log("Data structures were equal:")
+			t.Log("-- (file): %+v\n", *fromFile)
+			t.Log("-- (code): %+v\n", *fromCode)
 			t.Fail()
 		}
 	}
@@ -30,8 +29,8 @@ func TestValidFile(t *testing.T) {
 	cmp := Config{
 		Meta: Meta_S{
 			Email: "someguy@example.com",
-			PollInterval: "5s",
-			DryRun: true,
+			Poll_Interval: "5s",
+			Dry_Run: true,
 		},
 		Digital_Ocean: Digital_Ocean_S{
 			Token: "token1",
