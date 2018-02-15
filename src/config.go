@@ -16,7 +16,8 @@ type Digital_Ocean_S struct {
 
 type Meta_S struct {
 	Email string
-	Poll_Interval int
+	PollInterval string
+	DryRun bool
 }
 
 type Config struct {
