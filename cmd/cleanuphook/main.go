@@ -8,9 +8,11 @@ import (
 )
 
 func main() {
-	file := flag.String("--file",
+	file := flag.String(
+		"file",
 		"/etc/certmaster/certmaster.yml",
-		"Full path of the configuration file to use.")
+		"full path of the configuration file to use")
+	flag.Parse()
 
 	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
