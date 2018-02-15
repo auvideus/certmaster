@@ -9,6 +9,7 @@ import (
 	"strings"
 	"regexp"
 	"strconv"
+	"errors"
 )
 
 const (
@@ -30,7 +31,7 @@ func (t *TokenSource) Token() (*oauth2.Token, error) {
 	return token, nil
 }
 
-func CreateChallengeRecord(config *Config) {
+func CreateChallengeRecord(config *Config) error {
 
 	tokenSource := &TokenSource{
 		AccessToken: config.Digital_Ocean.Token,
@@ -40,6 +41,15 @@ func CreateChallengeRecord(config *Config) {
 	client := godo.NewClient(oauthClient)
 
 	domain := os.Getenv("CERTBOT_DOMAIN")
+	data := os.Getenv("CERTBOT_VALIDATION")
+	if domain == "" {
+		return errors.New(
+			"missing CERTBOT_DOMAIN environment variable")
+	}
+	if data == "" {
+		return errors.New(
+			"missing CERTBOT_VALIDATION environment variable")
+	}
 	log.Println("creating record for " + domain)
 	record, _, err := client.Domains.CreateRecord(
 		context.TODO(),
@@ -47,7 +57,7 @@ func CreateChallengeRecord(config *Config) {
 		&godo.DomainRecordEditRequest{
 			Type:     recordType,
 			Name:     recordNamePrefix,
-			Data:     os.Getenv("CERTBOT_VALIDATION"),
+			Data:     data,
 			Priority: 0,
 			Port:     0,
 			TTL:      1800,
@@ -57,11 +67,17 @@ func CreateChallengeRecord(config *Config) {
 		},
 	)
 	if err == nil {
-		log.Println(authPrefix + string(record.ID))
+		// for unit testing
+		os.Setenv("CERTBOT_AUTH_OUTPUT",
+			"INFO: " + authPrefix + strconv.Itoa(record.ID))
+
+		log.Println(authPrefix + strconv.Itoa(record.ID))
+		return nil
 	}
+	return err
 }
 
-func DeleteChallengeRecord(config *Config) {
+func DeleteChallengeRecord(config *Config) error {
 	tokenSource := &TokenSource{
 		AccessToken: config.Digital_Ocean.Token,
 	}
@@ -81,8 +97,7 @@ func DeleteChallengeRecord(config *Config) {
 	}
 
 	if authOutputID == -1 {
-		log.Fatal("no valid output found from auth script")
-		return
+		return errors.New("no valid output found from auth script")
 	}
 
 	domain := os.Getenv("CERTBOT_DOMAIN")
@@ -92,7 +107,5 @@ func DeleteChallengeRecord(config *Config) {
 		domain,
 		authOutputID,
 	)
-	if err != nil {
-		log.Fatal("problem deleting record: ", err)
-	}
+	return err
 }
