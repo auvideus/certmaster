@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"time"
 	"log"
-	certbot "github.com/auvideus/certmaster"
+	"github.com/auvideus/certmaster"
 	"flag"
 )
 
@@ -21,7 +21,7 @@ func main() {
 		"/etc/certmaster/certmaster.yml",
 		"Full path of the configuration file to use.")
 
-	config, err := certbot.ReadYamlFile(*file)
+	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
 		log.Fatal("could not read config file: %v", err)
 		os.Exit(1)
@@ -29,12 +29,12 @@ func main() {
 
 	duration := getPollInterval(config)
 	for {
-		certbot.CallCertbot(*file, config)
+		certmaster.CallCertbot(*file, config)
 		time.Sleep(duration)
 	}
 }
 
-func getPollInterval(config *certbot.Config) (time.Duration) {
+func getPollInterval(config *certmaster.Config) (time.Duration) {
 	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
 	if err != nil {
 		log.Println("misconfigured poll interval, setting to 5s")

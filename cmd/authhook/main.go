@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	certbot "github.com/auvideus/certmaster"
+	"github.com/auvideus/certmaster"
 	"flag"
 )
 
@@ -12,11 +12,11 @@ func main() {
 		"/etc/certmaster/certmaster.yml",
 		"Full path of the configuration file to use.")
 
-	config, err := certbot.ReadYamlFile(*file)
+	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
 		log.Fatal("error: %v", err)
 		os.Exit(1)
 	}
 
-	certbot.CreateChallengeRecord(config)
+	certmaster.CreateChallengeRecord(config)
 }
