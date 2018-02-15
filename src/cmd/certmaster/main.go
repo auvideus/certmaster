@@ -35,7 +35,7 @@ func main() {
 }
 
 func getPollInterval(config *certbot.Config) (time.Duration) {
-	duration, err := time.ParseDuration(config.Meta.PollInterval)
+	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
 	if err != nil {
 		log.Println("misconfigured poll interval, setting to 5s")
 		duration, _ = time.ParseDuration("5s")
