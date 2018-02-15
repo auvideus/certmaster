@@ -25,7 +25,7 @@ func main() {
 
 	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
-		log.Fatal("could not read config file", err)
+		log.Fatalln("could not read config file", err)
 	}
 
 	duration := certmaster.GetPollInterval(config)

@@ -15,11 +15,11 @@ func main() {
 
 	config, err := certmaster.ReadYamlFile(*file)
 	if err != nil {
-		log.Fatalln("could not read config file: ", err)
+		log.Fatalln("could not read config file:", err)
 	}
 
 	err = certmaster.DeleteChallengeRecord(config)
 	if err != nil {
-		log.Fatalln("error deleting challenge record: ", err)
+		log.Fatalln("error deleting challenge record:", err)
 	}
 }

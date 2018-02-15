@@ -3,9 +3,10 @@ package certmaster
 import (
 	"os/exec"
 	"log"
+	"fmt"
 )
 
-func CallCertbot(file string, config *Config) {
+func CallCertbot(file string, config *Config) error {
 	for _, domain := range config.Domains {
 		var arguments []string
 		arguments = append(arguments, "certonly")
@@ -26,18 +27,19 @@ func CallCertbot(file string, config *Config) {
 			arguments = append(arguments, subdomain)
 		}
 
-		alldomains := "\t" + domain.Name
+		allDomains := "\t" + domain.Name
 		for _, subdomain := range domain.Subdomains {
-			alldomains += "\n\t" + subdomain
+			allDomains += "\n\t" + subdomain
 		}
-		log.Println("calling certbot for domains\n" + alldomains)
+		log.Println("calling certbot for domains" + allDomains)
 
-		log.Println("certbot command arguments: %v", arguments)
+		log.Println("certbot command arguments:", arguments)
 
 		out, err := exec.Command("certbot", arguments...).CombinedOutput()
-		log.Println("%q\n", string(out))
+		log.Println(string(out))
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("error calling certbot command: %v", err)
 		}
 	}
+	return nil
 }
