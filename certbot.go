@@ -1,4 +1,4 @@
-package src
+package certmaster
 
 import (
 	"os/exec"

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	certbot "github.com/auvideus/certmaster/src"
+	certbot "github.com/auvideus/certmaster"
 	"flag"
 )
 

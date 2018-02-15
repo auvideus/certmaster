@@ -1,7 +1,7 @@
 package main
 
 import (
-	certbot "github.com/auvideus/certmaster/src"
+	certbot "github.com/auvideus/certmaster"
 	"log"
 	"os"
 	"flag"
