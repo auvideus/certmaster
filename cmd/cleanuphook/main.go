@@ -18,5 +18,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	certmaster.DeleteChallengeRecord(config)
+	err = certmaster.DeleteChallengeRecord(config)
+	if err != nil {
+		log.Fatalln("error deleting challenge record", err)
+	}
 }

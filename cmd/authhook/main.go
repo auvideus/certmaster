@@ -18,5 +18,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	certmaster.CreateChallengeRecord(config)
+	err = certmaster.CreateChallengeRecord(config)
+	if err != nil {
+		log.Fatalln("error creating challenge record", err)
+	}
 }
