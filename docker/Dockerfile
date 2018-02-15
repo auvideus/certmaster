@@ -12,7 +12,7 @@ RUN yum -y install \
 RUN go get \
     github.com/digitalocean/godo \
     github.com/digitalocean/godo/context \
-    github.com/auvideus/certmaster
+    github.com/auvideus/certmaster/src
     golang.org/x/oauth2
 
 ADD hook/certbot.go /opt/certbot.go
