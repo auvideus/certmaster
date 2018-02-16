@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	certmaster.Initialize()
+
 	file := flag.String(
 		"file",
 		"/etc/certmaster/certmaster.yml",

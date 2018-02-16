@@ -4,12 +4,14 @@ import (
 	"os"
 	"os/signal"
 	"time"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"github.com/auvideus/certmaster"
 	"flag"
 )
 
 func main() {
+	certmaster.Initialize()
+
 	signalChannel := make(chan os.Signal)
 	signal.Notify(signalChannel, os.Interrupt)
 	go func() {
