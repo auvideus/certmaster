@@ -9,6 +9,8 @@ import (
 	"flag"
 )
 
+// Entrypoint of certmaster.  Calls certbot in a loop after reading the
+// configuration file.
 func main() {
 	certmaster.Initialize()
 

@@ -6,6 +6,7 @@ import (
 	"flag"
 )
 
+// Target of the certbot cleanup hook.
 func main() {
 	certmaster.Initialize()
 

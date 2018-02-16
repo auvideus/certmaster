@@ -24,6 +24,7 @@ type TokenSource struct {
 	AccessToken string
 }
 
+// Token creates an oauth2 token.
 func (t *TokenSource) Token() (*oauth2.Token, error) {
 	token := &oauth2.Token{
 		AccessToken: t.AccessToken,
@@ -31,6 +32,7 @@ func (t *TokenSource) Token() (*oauth2.Token, error) {
 	return token, nil
 }
 
+// CreateChallengeRecord creates a Digital Ocean challenge record.
 func CreateChallengeRecord(config *Config) error {
 
 	tokenSource := &TokenSource{
@@ -77,6 +79,8 @@ func CreateChallengeRecord(config *Config) error {
 	return err
 }
 
+// DeleteChallengeRecord deletes the previously-created challenge record that
+// was part of the same certbot invocation.
 func DeleteChallengeRecord(config *Config) error {
 	tokenSource := &TokenSource{
 		AccessToken: config.Digital_Ocean.Token,

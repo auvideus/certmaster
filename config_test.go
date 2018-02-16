@@ -5,6 +5,7 @@ import (
 	"reflect"
 )
 
+// Compare compares two Config objects for equality, and fails accordingly.
 func compare(t *testing.T, fromFile *Config, fromCode *Config, equal bool) {
 	if !reflect.DeepEqual(fromFile, fromCode) {
 		if equal {
@@ -23,6 +24,7 @@ func compare(t *testing.T, fromFile *Config, fromCode *Config, equal bool) {
 	}
 }
 
+// TestValidFile tests that valid files are readable.
 func TestValidFile(t *testing.T) {
 	config, _ := ReadYamlFile("./resources/certmaster_valid.yml")
 
@@ -51,6 +53,7 @@ func TestValidFile(t *testing.T) {
 	compare(t, config, &cmp, true)
 }
 
+// TestIncompleteFile tests that incomplete files are not readable.
 func TestIncompleteFile(t *testing.T) {
 	_, err := ReadYamlFile("./resources/certmaster_incomplete.yml")
 

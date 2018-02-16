@@ -7,16 +7,19 @@ import (
 	"strings"
 )
 
+// cmdI is used as an interface for unit testing.
 type cmdI interface {
 	CombinedOutput() ([]byte, error)
 }
 
+// cmdBuilder is used to get a Cmd object via exec.Command.
 func cmdBuilder(name string, arg ...string) cmdI {
 	return exec.Command(name, arg...)
 }
 
 var execCommand = cmdBuilder
 
+// RefreshCerts is used to get the certs for all domains in the configuration.
 func RefreshCerts(file string, config *Config) (ok bool) {
 	ok = true
 	for _, domain := range config.Domains {
@@ -31,6 +34,7 @@ func RefreshCerts(file string, config *Config) (ok bool) {
 	return ok
 }
 
+// callCertbot actually calls the certbot command for the given information.
 func callCertbot(file string, email string, domains []string) (
 	args string, err error) {
 	if file == "" || email == "" || len(domains) < 1 {

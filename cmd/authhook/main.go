@@ -6,6 +6,7 @@ import (
 	"flag"
 )
 
+// Target of the certbot auth-hook script.
 func main() {
 	certmaster.Initialize()
 

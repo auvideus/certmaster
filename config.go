@@ -29,6 +29,8 @@ type Config struct {
 	Domains       []Domain
 }
 
+// ReadYamlFile tests that the file can be read and the configuration is
+// correct.
 func ReadYamlFile(file string) (c *Config, err error) {
 	bytes, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -53,6 +55,7 @@ func ReadYamlFile(file string) (c *Config, err error) {
 	return c, nil
 }
 
+// GetPollInterval checks that the poll interval is set to a default.
 func GetPollInterval(config *Config) (time.Duration) {
 	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
 	if err != nil {
