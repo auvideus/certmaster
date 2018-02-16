@@ -29,7 +29,7 @@ func TestValidFile(t *testing.T) {
 	cmp := Config{
 		Meta: Meta{
 			Email: "someguy@example.com",
-			Poll_Interval: "5s",
+			Poll_Interval: "5m",
 			Dry_Run: true,
 		},
 		Digital_Ocean: DigitalOcean{

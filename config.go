@@ -56,14 +56,14 @@ func ReadYamlFile(file string) (c *Config, err error) {
 func GetPollInterval(config *Config) (time.Duration) {
 	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
 	if err != nil {
-		log.Infoln("misconfigured poll interval, setting to 5s")
-		duration, _ = time.ParseDuration("5s")
+		log.Infoln("misconfigured poll interval, setting to 5m")
+		duration, _ = time.ParseDuration("5m")
 		return duration
 	}
 	tooShort := int64(duration) * 1000000 < 5
 	if tooShort {
-		log.Infoln("poll interval too short, setting to 5s")
-		duration, _ = time.ParseDuration("5s")
+		log.Infoln("poll interval too short, setting to 5m")
+		duration, _ = time.ParseDuration("5m")
 	}
 	return duration
 }
