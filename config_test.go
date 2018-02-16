@@ -52,23 +52,9 @@ func TestValidFile(t *testing.T) {
 }
 
 func TestIncompleteFile(t *testing.T) {
-	config, _ := ReadYamlFile("./resources/certmaster_incomplete.yml")
+	_, err := ReadYamlFile("./resources/certmaster_incomplete.yml")
 
-	cmp := Config{
-		Digital_Ocean: DigitalOcean{
-			Token: "",
-		},
-		Domains: []Domain{
-			{
-				Name: "example.com",
-				Subdomains: []string{},
-			},
-			{
-				Name: "example2.com",
-				Subdomains: []string{},
-			},
-		},
+	if err == nil {
+		t.Error("missing required fields, should have failed")
 	}
-
-	compare(t, config, &cmp, false)
 }

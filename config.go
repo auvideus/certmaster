@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"time"
 	"log"
+	"errors"
 )
 
 type Domain struct {
@@ -36,6 +37,18 @@ func ReadYamlFile(file string) (c *Config, err error) {
 	err2 := yaml.Unmarshal(bytes, &c)
 	if err != nil {
 		return nil, err2
+	}
+	if c.Meta.Email == "" {
+		return nil, errors.New(
+			"email missing from configuration file")
+	}
+	if c.Meta.Email == "" {
+		return nil, errors.New(
+			"token missing from configuration file")
+	}
+	if len(c.Domains) < 1 {
+		return nil, errors.New(
+			"no domains specified in configuration")
 	}
 	return c, nil
 }
