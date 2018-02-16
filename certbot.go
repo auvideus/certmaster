@@ -4,6 +4,7 @@ import (
 	"os/exec"
 	"log"
 	"fmt"
+	"strings"
 )
 
 type cmdI interface {
@@ -16,40 +17,48 @@ func cmdBuilder(name string, arg ...string) cmdI {
 
 var execCommand = cmdBuilder
 
-func CallCertbot(file string, config *Config) error {
+func RefreshCerts(file string, config *Config) (ok bool) {
+	ok = true
 	for _, domain := range config.Domains {
-		var arguments []string
-		arguments = append(arguments, "certonly")
-		arguments = append(arguments, "--non-interactive")
-		arguments = append(arguments, "--manual-public-ip-logging-ok")
-		arguments = append(arguments, "--agree-tos")
-		arguments = append(arguments, "--email=" + config.Meta.Email)
-		arguments = append(arguments, "--manual")
-		arguments = append(arguments, "--preferred-challenges=dns")
-		arguments = append(arguments, "--manual-auth-hook")
-		arguments = append(arguments, "/opt/certmaster/pre.sh --file " + file)
-		arguments = append(arguments, "--manual-cleanup-hook")
-		arguments = append(arguments, "/opt/certmaster/post.sh --file " + file)
-		arguments = append(arguments, "-d")
-		arguments = append(arguments, domain.Name)
-		for _, subdomain := range domain.Subdomains {
-			arguments = append(arguments, "-d")
-			arguments = append(arguments, subdomain)
-		}
-
-		allDomains := "\n\t" + domain.Name
-		for _, subdomain := range domain.Subdomains {
-			allDomains += "\n\t" + subdomain
-		}
-		log.Println("calling certbot for domains:" + allDomains)
-
-		log.Println("certbot command arguments:", arguments)
-
-		out, err := execCommand("certbot", arguments...).CombinedOutput()
-		log.Println(string(out))
+		allDomains := append([]string{domain.Name}, domain.Subdomains...)
+		_, err := callCertbot(file, config.Meta.Email, allDomains)
 		if err != nil {
-			return fmt.Errorf("error calling certbot command: %v", err)
+			ok = false
+			fmt.Errorf("error refreshing certs for domain %v: %v",
+				domain, err)
 		}
 	}
-	return nil
+	return ok
+}
+
+func callCertbot(file string, email string, domains []string) (
+	args string, err error) {
+	if file == "" || email == "" || len(domains) < 1 {
+		return "", fmt.Errorf("file and email must not be empty")
+	}
+	var arguments []string
+	arguments = append(arguments, "certonly")
+	arguments = append(arguments, "--non-interactive")
+	arguments = append(arguments, "--manual-public-ip-logging-ok")
+	arguments = append(arguments, "--agree-tos")
+	arguments = append(arguments, "--email=" + email)
+	arguments = append(arguments, "--manual")
+	arguments = append(arguments, "--preferred-challenges=dns")
+	arguments = append(arguments, "--manual-auth-hook")
+	arguments = append(arguments, "/opt/certmaster/pre.sh --file " + file)
+	arguments = append(arguments, "--manual-cleanup-hook")
+	arguments = append(arguments, "/opt/certmaster/post.sh --file " + file)
+	for _, domain := range domains {
+		arguments = append(arguments, "-d " + domain)
+	}
+
+	log.Println("certbot arguments:", arguments)
+
+	out, err := execCommand("certbot", arguments...).CombinedOutput()
+	log.Println(string(out))
+	if err != nil {
+		return "", fmt.Errorf(
+			"error calling certbot command: %v", err)
+	}
+	return strings.Join(arguments, " "), nil
 }

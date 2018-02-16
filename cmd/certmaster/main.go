@@ -30,7 +30,10 @@ func main() {
 
 	duration := certmaster.GetPollInterval(config)
 	for {
-		certmaster.CallCertbot(*file, config)
+		ok := certmaster.RefreshCerts(*file, config)
+		if !ok {
+			log.Println("error refreshing certs")
+		}
 		time.Sleep(duration)
 	}
 }
