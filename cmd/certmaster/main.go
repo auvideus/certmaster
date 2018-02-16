@@ -34,7 +34,7 @@ func main() {
 	for {
 		ok := certmaster.RefreshCerts(*file, config)
 		if !ok {
-			log.Println("error refreshing certs")
+			log.Infoln("error refreshing certs")
 		}
 		time.Sleep(duration)
 	}

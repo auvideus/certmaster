@@ -2,7 +2,7 @@ package certmaster
 
 import (
 	"os/exec"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"fmt"
 	"strings"
 )
@@ -52,10 +52,10 @@ func callCertbot(file string, email string, domains []string) (
 		arguments = append(arguments, "-d " + domain)
 	}
 
-	log.Println("certbot arguments:", arguments)
+	log.Infoln("certbot arguments:", arguments)
 
 	out, err := execCommand("certbot", arguments...).CombinedOutput()
-	log.Println(string(out))
+	log.Infoln(string(out))
 	if err != nil {
 		return "", fmt.Errorf(
 			"error calling certbot command: %v", err)

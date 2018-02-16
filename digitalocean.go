@@ -4,7 +4,7 @@ import (
 	"os"
 	"github.com/digitalocean/godo"
 	"github.com/digitalocean/godo/context"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
 	"strings"
 	"regexp"
@@ -50,7 +50,7 @@ func CreateChallengeRecord(config *Config) error {
 		return errors.New(
 			"missing CERTBOT_VALIDATION environment variable")
 	}
-	log.Println("creating record for " + domain)
+	log.Infoln("creating record for " + domain)
 	record, _, err := client.Domains.CreateRecord(
 		context.TODO(),
 		domain,
@@ -71,7 +71,7 @@ func CreateChallengeRecord(config *Config) error {
 		os.Setenv("CERTBOT_AUTH_OUTPUT",
 			"INFO: " + authPrefix + strconv.Itoa(record.ID))
 
-		log.Println(authPrefix + strconv.Itoa(record.ID))
+		log.Infoln(authPrefix + strconv.Itoa(record.ID))
 		return nil
 	}
 	return err
@@ -101,7 +101,7 @@ func DeleteChallengeRecord(config *Config) error {
 	}
 
 	domain := os.Getenv("CERTBOT_DOMAIN")
-	log.Println("deleting record for " + domain)
+	log.Infoln("deleting record for " + domain)
 	_, err := client.Domains.DeleteRecord(
 		context.TODO(),
 		domain,
