@@ -17,9 +17,9 @@ func CallCertbot(file string, config *Config) error {
 		arguments = append(arguments, "--manual")
 		arguments = append(arguments, "--preferred-challenges=dns")
 		arguments = append(arguments, "--manual-auth-hook")
-		arguments = append(arguments, "/opt/pre.sh --file " + file)
+		arguments = append(arguments, "/opt/certmaster/pre.sh --file " + file)
 		arguments = append(arguments, "--manual-cleanup-hook")
-		arguments = append(arguments, "/opt/post.sh --file " + file)
+		arguments = append(arguments, "/opt/certmaster/post.sh --file " + file)
 		arguments = append(arguments, "-d")
 		arguments = append(arguments, domain.Name)
 		for _, subdomain := range domain.Subdomains {
