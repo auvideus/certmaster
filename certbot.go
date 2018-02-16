@@ -6,6 +6,16 @@ import (
 	"fmt"
 )
 
+type cmdI interface {
+	CombinedOutput() ([]byte, error)
+}
+
+func cmdBuilder(name string, arg ...string) cmdI {
+	return exec.Command(name, arg...)
+}
+
+var execCommand = cmdBuilder
+
 func CallCertbot(file string, config *Config) error {
 	for _, domain := range config.Domains {
 		var arguments []string
@@ -27,15 +37,15 @@ func CallCertbot(file string, config *Config) error {
 			arguments = append(arguments, subdomain)
 		}
 
-		allDomains := "\t" + domain.Name
+		allDomains := "\n\t" + domain.Name
 		for _, subdomain := range domain.Subdomains {
 			allDomains += "\n\t" + subdomain
 		}
-		log.Println("calling certbot for domains" + allDomains)
+		log.Println("calling certbot for domains:" + allDomains)
 
 		log.Println("certbot command arguments:", arguments)
 
-		out, err := exec.Command("certbot", arguments...).CombinedOutput()
+		out, err := execCommand("certbot", arguments...).CombinedOutput()
 		log.Println(string(out))
 		if err != nil {
 			return fmt.Errorf("error calling certbot command: %v", err)
