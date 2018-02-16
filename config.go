@@ -28,8 +28,8 @@ type Config struct {
 	Domains       []Domain
 }
 
-func ReadYamlFile(file string) (c *Config, err error) {
-	bytes, err := ioutil.ReadFile(file)
+func ReadYamlFile(file *string) (c *Config, err error) {
+	bytes, err := ioutil.ReadFile(*file)
 	if err != nil {
 		return nil, err
 	}
