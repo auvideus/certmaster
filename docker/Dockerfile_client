@@ -1,0 +1,19 @@
+FROM golang:7
+
+RUN yum -y install epel-release
+
+RUN yum -y install \
+    certbot \
+    git \
+    golang
+
+RUN go get \
+    github.com/auvideus/certmaster/cmd/certmaster-client
+
+VOLUME /etc/letsencrypt
+
+WORKDIR /opt/certmaster
+
+ENV PATH /root/go/bin:$PATH
+
+CMD ["certmaster-client"]
