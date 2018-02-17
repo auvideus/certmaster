@@ -1,23 +1,10 @@
 package certmaster
 
 import (
-	"os/exec"
 	log "github.com/sirupsen/logrus"
 	"fmt"
 	"strings"
 )
-
-// cmdI is used as an interface for unit testing.
-type cmdI interface {
-	CombinedOutput() ([]byte, error)
-}
-
-// cmdBuilder is used to get a Cmd object via exec.Command.
-func cmdBuilder(name string, arg ...string) cmdI {
-	return exec.Command(name, arg...)
-}
-
-var execCommand = cmdBuilder
 
 // RefreshCerts is used to get the certs for all domains in the configuration.
 func RefreshCerts(file string, config *Config) (ok bool) {
