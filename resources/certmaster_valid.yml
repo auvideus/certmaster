@@ -6,6 +6,8 @@ server:
 client:
   poll_interval: "5m"
   priv_key: /root/.ssh/id_rsa_certmaster
+  path: /etc/letsencrypt
+  host: localhost
 digital_ocean:
   token: token1
 domains:

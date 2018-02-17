@@ -26,6 +26,8 @@ type Server struct {
 type Client struct {
 	Poll_Interval string
 	Priv_Key 	  string
+	Path          string
+	Host          string
 }
 
 type Config struct {
