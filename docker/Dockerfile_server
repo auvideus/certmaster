@@ -8,9 +8,9 @@ RUN yum -y install \
     golang
 
 RUN go get \
-    github.com/auvideus/certmaster/cmd/certmaster \
-    github.com/auvideus/certmaster/cmd/authhook \
-    github.com/auvideus/certmaster/cmd/cleanuphook
+    github.com/auvideus/certmaster/cmd/certmaster-server \
+    github.com/auvideus/certmaster/cmd/certmaster-authhook \
+    github.com/auvideus/certmaster/cmd/certmaster-cleanuphook
 
 VOLUME /etc/letsencrypt
 
@@ -21,4 +21,4 @@ ADD post.sh .
 
 ENV PATH /root/go/bin:$PATH
 
-CMD ["certmaster"]
+CMD ["certmaster-server"]

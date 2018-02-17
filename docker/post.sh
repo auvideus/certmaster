@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cleanuphook "$@"
+certmaster-cleanuphook "$@"
