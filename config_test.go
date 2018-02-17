@@ -17,8 +17,8 @@ func compare(t *testing.T, fromFile *Config, fromCode *Config, equal bool) {
 	} else {
 		if !equal {
 			t.Log("Data structures were equal:")
-			t.Log("-- (file): %+v\n", *fromFile)
-			t.Log("-- (code): %+v\n", *fromCode)
+			t.Log("-- (file): ", *fromFile)
+			t.Log("-- (code): ", *fromCode)
 			t.Fail()
 		}
 	}
