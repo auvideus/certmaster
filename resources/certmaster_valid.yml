@@ -3,6 +3,9 @@ server:
   email: someguy@example.com
   poll_interval: "5m"
   dry_run: true
+client:
+  poll_interval: "5m"
+  priv_key: /root/.ssh/id_rsa_certmaster
 digital_ocean:
   token: token1
 domains:

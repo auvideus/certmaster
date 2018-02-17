@@ -34,6 +34,10 @@ func TestValidFile(t *testing.T) {
 			Poll_Interval: "5m",
 			Dry_Run: true,
 		},
+		Client: Client{
+			Poll_Interval: "5m",
+			Priv_Key: "/root/.ssh/id_rsa_certmaster",
+		},
 		Digital_Ocean: DigitalOcean{
 			Token: "token1",
 		},

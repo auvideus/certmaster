@@ -23,8 +23,14 @@ type Server struct {
 	Dry_Run bool
 }
 
+type Client struct {
+	Poll_Interval string
+	Priv_Key 	  string
+}
+
 type Config struct {
 	Server        Server
+	Client	      Client
 	Digital_Ocean DigitalOcean
 	Domains       []Domain
 }
