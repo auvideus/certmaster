@@ -29,7 +29,7 @@ func TestValidFile(t *testing.T) {
 	config, _ := ReadYamlFile("./resources/certmaster_valid.yml")
 
 	cmp := Config{
-		Meta: Meta{
+		Server: Server{
 			Email: "someguy@example.com",
 			Poll_Interval: "5m",
 			Dry_Run: true,

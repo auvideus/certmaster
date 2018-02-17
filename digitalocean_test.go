@@ -28,7 +28,7 @@ func createConfig(t *testing.T) *Config {
 	os.Setenv("CERTBOT_DOMAIN", domain)
 	os.Setenv("CERTBOT_VALIDATION", "testval")
 	config := Config{
-		Meta: Meta{
+		Server: Server{
 			Email: email,
 		},
 		Digital_Ocean: DigitalOcean{

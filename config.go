@@ -17,14 +17,14 @@ type DigitalOcean struct {
 	Token string
 }
 
-type Meta struct {
+type Server struct {
 	Email string
 	Poll_Interval string
 	Dry_Run bool
 }
 
 type Config struct {
-	Meta          Meta
+	Server        Server
 	Digital_Ocean DigitalOcean
 	Domains       []Domain
 }
@@ -40,11 +40,11 @@ func ReadYamlFile(file string) (c *Config, err error) {
 	if err != nil {
 		return nil, err2
 	}
-	if c.Meta.Email == "" {
+	if c.Server.Email == "" {
 		return nil, errors.New(
 			"email missing from configuration file")
 	}
-	if c.Meta.Email == "" {
+	if c.Server.Email == "" {
 		return nil, errors.New(
 			"token missing from configuration file")
 	}
@@ -57,7 +57,7 @@ func ReadYamlFile(file string) (c *Config, err error) {
 
 // GetPollInterval checks that the poll interval is set to a default.
 func GetPollInterval(config *Config) (time.Duration) {
-	duration, err := time.ParseDuration(config.Meta.Poll_Interval)
+	duration, err := time.ParseDuration(config.Server.Poll_Interval)
 	if err != nil {
 		log.Infoln("misconfigured poll interval, setting to 5m")
 		duration, _ = time.ParseDuration("5m")

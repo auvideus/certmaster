@@ -74,7 +74,7 @@ func TestRefreshCerts(t *testing.T) {
 		execCommand = cmdBuilder
 	}()
 	config := Config{
-		Meta: Meta{
+		Server: Server{
 			Email: "example@example.com",
 		},
 		Domains: []Domain{

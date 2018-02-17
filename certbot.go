@@ -11,7 +11,7 @@ func RefreshCerts(file string, config *Config) (ok bool) {
 	ok = true
 	for _, domain := range config.Domains {
 		allDomains := append([]string{domain.Name}, domain.Subdomains...)
-		_, err := callCertbot(file, config.Meta.Email, allDomains)
+		_, err := callCertbot(file, config.Server.Email, allDomains)
 		if err != nil {
 			ok = false
 			fmt.Errorf("error refreshing certs for domain %v: %v",
