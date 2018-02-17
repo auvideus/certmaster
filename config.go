@@ -61,9 +61,27 @@ func ReadYamlFile(file string) (c *Config, err error) {
 	return c, nil
 }
 
-// GetPollInterval checks that the poll interval is set to a default.
-func GetPollInterval(config *Config) (time.Duration) {
-	duration, err := time.ParseDuration(config.Server.Poll_Interval)
+// GetServerPollInterval checks that the poll interval is set to a default.
+func GetServerPollInterval(config *Config) (time.Duration) {
+	return getPollInterval("server", config)
+}
+
+// GetClientPollInterval checks that the poll interval is set to a default.
+func GetClientPollInterval(config *Config) (time.Duration) {
+	return getPollInterval("client", config)
+}
+
+// getPollInterval gets a polling interval value out of the config, setting
+// it to a reasonable default if not set.
+func getPollInterval(section string, config *Config) (time.Duration) {
+	var duration time.Duration
+	var err error
+	switch section {
+	case "server":
+		duration, err = time.ParseDuration(config.Server.Poll_Interval)
+	case "client":
+		duration, err = time.ParseDuration(config.Client.Poll_Interval)
+	}
 	if err != nil {
 		log.Infoln("misconfigured poll interval, setting to 5m")
 		duration, _ = time.ParseDuration("5m")
