@@ -12,7 +12,7 @@ RUN go get \
 
 VOLUME /etc/letsencrypt
 
-WORKDIR /opt/certmaster
+WORKDIR /etc/certmaster
 
 ENV PATH /root/go/bin:$PATH
 

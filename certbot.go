@@ -36,9 +36,9 @@ func callCertbot(file string, email string, domains []string) (
 	arguments = append(arguments, "--manual")
 	arguments = append(arguments, "--preferred-challenges=dns")
 	arguments = append(arguments, "--manual-auth-hook")
-	arguments = append(arguments, "/opt/certmaster/pre.sh --file " + file)
+	arguments = append(arguments, "/etc/certmaster/pre.sh \"--file " + file + "\"")
 	arguments = append(arguments, "--manual-cleanup-hook")
-	arguments = append(arguments, "/opt/certmaster/post.sh --file " + file)
+	arguments = append(arguments, "/etc/certmaster/post.sh \"--file " + file + "\"")
 	for _, domain := range domains {
 		arguments = append(arguments, "-d " + domain)
 	}

@@ -1,3 +1,5 @@
-FROM certmaster-server
+FROM certmaster-server:latest
 
 COPY docker/test/certmaster-server.yml .
+
+CMD ["certmaster-server", "-file", "/etc/certmaster/certmaster-server.yml"]

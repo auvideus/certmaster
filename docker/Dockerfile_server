@@ -17,7 +17,7 @@ RUN apk add --no-cache certbot
 
 COPY --from=builder /go/bin/certmaster-* /bin/
 
-WORKDIR /opt/certmaster
+WORKDIR /etc/certmaster
 
 ADD hooks/pre.sh .
 ADD hooks/post.sh .
