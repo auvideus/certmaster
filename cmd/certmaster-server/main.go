@@ -20,7 +20,7 @@ func main() {
 		os.Exit(0)
 	}()
 
-	config, err := certmaster.ReadYamlFile(configPath)
+	config, err := certmaster.ReadYamlFile(certmaster.ConfigPath)
 	if err != nil {
 		log.Fatalln("could not read config file", err)
 	}
@@ -33,7 +33,7 @@ func main() {
 	for {
 		ok := certmaster.RefreshCerts(config)
 		if !ok {
-			log.Infoln("error refreshing certs")
+			log.Error("error refreshing certs")
 		}
 		if isZero {
 			return

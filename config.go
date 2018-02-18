@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	configPath = "/etc/certmaster/certmaster.yml"
+	ConfigPath = "/etc/certmaster/certmaster.yml"
 )
 
 type Domain struct {
