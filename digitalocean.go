@@ -56,6 +56,8 @@ func CreateChallengeRecord(config *Config) error {
 
 	if config.Server.Dry_Run {
 		log.Infoln("because of dry run, not actually creating record")
+		os.Setenv(
+			"CERTBOT_AUTH_OUTPUT", authPrefix + "00000000")
 		return nil
 	}
 	record, _, err := client.Domains.CreateRecord(
@@ -75,8 +77,8 @@ func CreateChallengeRecord(config *Config) error {
 	)
 	if err == nil {
 		// for unit testing
-		os.Setenv("CERTBOT_AUTH_OUTPUT",
-			"INFO: " + authPrefix + strconv.Itoa(record.ID))
+		os.Setenv(
+			"CERTBOT_AUTH_OUTPUT", authPrefix + strconv.Itoa(record.ID))
 
 		log.Infoln(authPrefix + strconv.Itoa(record.ID))
 		return nil

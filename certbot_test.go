@@ -19,6 +19,7 @@ func TestCallCertbot(t *testing.T) {
 	_, err := callCertbot(
 		email,
 		domains,
+		true,
 	)
 	if err != nil {
 		t.Error("valid call was an error")
@@ -26,6 +27,7 @@ func TestCallCertbot(t *testing.T) {
 	_, err = callCertbot(
 		"",
 		domains,
+		true,
 	)
 	if err == nil {
 		t.Error("empty email should be an error")
@@ -33,6 +35,7 @@ func TestCallCertbot(t *testing.T) {
 	_, err = callCertbot(
 		email,
 		[]string{},
+		true,
 	)
 	if err == nil {
 		t.Error("empty domains should be an error")
