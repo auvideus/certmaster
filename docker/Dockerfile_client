@@ -1,19 +1,20 @@
-FROM golang:7
+FROM golang:1.8 as builder
 
-RUN yum -y install epel-release
+WORKDIR /go/src/github.com/auvideus/certmaster
 
-RUN yum -y install \
-    certbot \
-    git \
-    golang
+COPY . .
 
-RUN go get \
-    github.com/auvideus/certmaster/cmd/certmaster-client
+RUN go get -d -v ./cmd/certmaster-client \
+    && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-client
 
-VOLUME /etc/letsencrypt
+FROM golang:1.9-alpine3.7 as runner
+
+RUN apk add --update --no-cache rsync
+
+COPY --from=builder /go/bin/certmaster-* /bin/
 
 WORKDIR /etc/certmaster
 
-ENV PATH /root/go/bin:$PATH
+VOLUME /etc/letsencrypt
 
 CMD ["certmaster-client"]
