@@ -6,6 +6,4 @@ sudo: required
 services:
 - docker
 before_install:
-- docker build -t certmaster-server -f docker/Dockerfile_server .
-- docker build -t certmaster-server-test -f docker/test/Dockerfile_server .
-- docker run certmaster-server-test
+- docker/test.sh
