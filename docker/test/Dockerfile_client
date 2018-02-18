@@ -1,0 +1,3 @@
+FROM certmaster-client:latest
+
+COPY docker/test/certmaster-client.yml /etc/certmaster/certmaster.yml

@@ -1,0 +1,6 @@
+---
+client:
+  dry_run: true
+  priv_key: /root/.ssh/id_rsa_certmaster
+  path: /etc/letsencrypt
+  host: example.com
