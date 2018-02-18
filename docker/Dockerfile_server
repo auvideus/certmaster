@@ -1,24 +1,27 @@
-FROM centos:7
+FROM golang:1.8 as builder
 
-RUN yum -y install epel-release
+WORKDIR /go/src/github.com/auvideus/certmaster
 
-RUN yum -y install \
-    certbot \
-    git \
-    golang
+COPY . .
 
-RUN go get \
-    github.com/auvideus/certmaster/cmd/certmaster-server \
-    github.com/auvideus/certmaster/cmd/certmaster-authhook \
-    github.com/auvideus/certmaster/cmd/certmaster-cleanuphook
+RUN go get -d -v ./cmd/certmaster-server \
+    && go get -d -v ./cmd/certmaster-authhook \
+    && go get -d -v ./cmd/certmaster-cleanuphook \
+    && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-server \
+    && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-authhook \
+    && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-cleanuphook
 
-VOLUME /etc/letsencrypt
+FROM golang:alpine as runner
+
+RUN apk add --no-cache certbot
+
+COPY --from=builder /go/bin/certmaster-* /bin/
 
 WORKDIR /opt/certmaster
 
-ADD pre.sh .
-ADD post.sh .
+ADD hooks/pre.sh .
+ADD hooks/post.sh .
 
-ENV PATH /root/go/bin:$PATH
+VOLUME /etc/letsencrypt
 
 CMD ["certmaster-server"]
