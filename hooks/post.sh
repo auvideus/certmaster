@@ -1,3 +1,3 @@
 #!/bin/bash
 
-certmaster-cleanuphook "$@"
+certmaster-cleanuphook /etc/certmaster/certmaster.yml

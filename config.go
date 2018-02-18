@@ -8,6 +8,10 @@ import (
 	"errors"
 )
 
+const (
+	configPath = "/etc/certmaster/certmaster.yml"
+)
+
 type Domain struct {
 	Name string
 	Subdomains []string

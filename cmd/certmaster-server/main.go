@@ -6,7 +6,6 @@ import (
 	"time"
 	log "github.com/sirupsen/logrus"
 	"github.com/auvideus/certmaster"
-	"flag"
 )
 
 // Entrypoint of certmaster.  Calls certbot in a loop after reading the
@@ -21,13 +20,7 @@ func main() {
 		os.Exit(0)
 	}()
 
-	file := flag.String(
-		"file",
-		"/etc/certmaster/certmaster.yml",
-		"full path of the configuration file to use")
-	flag.Parse()
-
-	config, err := certmaster.ReadYamlFile(*file)
+	config, err := certmaster.ReadYamlFile(configPath)
 	if err != nil {
 		log.Fatalln("could not read config file", err)
 	}
@@ -38,7 +31,7 @@ func main() {
 		time.Sleep(10 * time.Second)
 	}
 	for {
-		ok := certmaster.RefreshCerts(*file, config)
+		ok := certmaster.RefreshCerts(config)
 		if !ok {
 			log.Infoln("error refreshing certs")
 		}

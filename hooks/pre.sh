@@ -1,3 +1,3 @@
 #!/bin/bash
 
-certmaster-authhook "$@"
+certmaster-authhook /etc/certmaster/certmaster.yml

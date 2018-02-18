@@ -10,7 +10,6 @@ func TestCallCertbot(t *testing.T) {
 	defer func() {
 		execCommand = cmdBuilder
 	}()
-	file := "/certmaster.yml"
 	email := "example@example.com"
 	domains := []string{
 		"example.com",
@@ -18,7 +17,6 @@ func TestCallCertbot(t *testing.T) {
 		"app2.example.com",
 	}
 	_, err := callCertbot(
-		file,
 		email,
 		domains,
 	)
@@ -27,22 +25,12 @@ func TestCallCertbot(t *testing.T) {
 	}
 	_, err = callCertbot(
 		"",
-		email,
-		domains,
-	)
-	if err == nil {
-		t.Error("empty file should be an error")
-	}
-	_, err = callCertbot(
-		file,
-		"",
 		domains,
 	)
 	if err == nil {
 		t.Error("empty email should be an error")
 	}
 	_, err = callCertbot(
-		file,
 		email,
 		[]string{},
 	)
@@ -78,15 +66,11 @@ func TestRefreshCerts(t *testing.T) {
 			},
 		},
 	}
-	ok := RefreshCerts("/test.yml", &config)
+	ok := RefreshCerts(&config)
 	if !ok {
 		t.Error("valid call was an error")
 	}
-	ok = RefreshCerts("", &config)
-	if ok {
-		t.Error("empty file should be an error")
-	}
-	ok = RefreshCerts("/test.yml", &Config{})
+	ok = RefreshCerts(&Config{})
 	if !ok {
 		t.Error("no domains should be ok")
 	}
