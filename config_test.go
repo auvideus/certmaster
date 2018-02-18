@@ -59,12 +59,3 @@ func TestValidFile(t *testing.T) {
 
 	compare(t, config, &cmp, true)
 }
-
-// TestIncompleteFile tests that incomplete files are not readable.
-func TestIncompleteFile(t *testing.T) {
-	_, err := ReadYamlFile("./resources/certmaster_incomplete.yml")
-
-	if err == nil {
-		t.Error("missing required fields, should have failed")
-	}
-}
