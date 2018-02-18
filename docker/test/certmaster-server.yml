@@ -6,6 +6,3 @@ digital_ocean:
   token: faketoken
 domains:
 - name: example.com
-  subdomains:
-  - app.example.com
-- name: example2.com
