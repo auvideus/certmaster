@@ -11,7 +11,7 @@ RUN go get -d -v ./cmd/certmaster-server \
     && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-authhook \
     && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-cleanuphook
 
-FROM golang:alpine as runner
+FROM golang:1.8-alpine3.5 as runner
 
 RUN apk add --no-cache certbot
 
