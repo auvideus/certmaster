@@ -29,6 +29,7 @@ type Server struct {
 
 type Client struct {
 	Poll_Interval string
+	Dry_Run       bool
 	Priv_Key 	  string
 	Path          string
 	Host          string

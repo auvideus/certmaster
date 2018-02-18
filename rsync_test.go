@@ -15,6 +15,7 @@ func TestPullCerts(t *testing.T) {
 	err := PullCerts(
 		host,
 		path,
+		false,
 	)
 	if err != nil {
 		t.Error("valid call was an error")
@@ -24,6 +25,7 @@ func TestPullCerts(t *testing.T) {
 	err = PullCerts(
 		host,
 		path,
+		false,
 	)
 	if err == nil {
 		t.Error("missing host returned ok")
@@ -33,6 +35,7 @@ func TestPullCerts(t *testing.T) {
 	err = PullCerts(
 		host,
 		path,
+		false,
 	)
 	if err == nil {
 		t.Error("missing path returned ok")

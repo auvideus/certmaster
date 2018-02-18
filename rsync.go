@@ -7,7 +7,7 @@ import (
 )
 
 // PullCerts calls the rsync command internally to pull the certs.
-func PullCerts(host string, path string) error {
+func PullCerts(host string, path string, dryRun bool) error {
 	if host == "" || path == "" {
 		return errors.New("host and path must be given")
 	}
@@ -19,6 +19,9 @@ func PullCerts(host string, path string) error {
 
 	log.Infoln("rsync arguments:", arguments)
 
+	if dryRun {
+		return nil
+	}
 	out, err := execCommand("rsync", arguments...).CombinedOutput()
 	log.Infoln(string(out))
 	if err != nil {

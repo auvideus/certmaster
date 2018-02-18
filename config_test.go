@@ -36,6 +36,7 @@ func TestValidFile(t *testing.T) {
 		},
 		Client: Client{
 			Poll_Interval: "5m",
+			Dry_Run: true,
 			Priv_Key: "/root/.ssh/id_rsa_certmaster",
 			Path: "/etc/letsencrypt",
 			Host: "localhost",

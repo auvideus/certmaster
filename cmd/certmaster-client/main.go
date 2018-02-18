@@ -32,7 +32,8 @@ func main() {
 		time.Sleep(10 * time.Second)
 	}
 	for {
-		err := certmaster.PullCerts(config.Client.Host, config.Client.Path)
+		err := certmaster.PullCerts(
+			config.Client.Host, config.Client.Path, config.Client.Dry_Run)
 		if err != nil {
 			log.Error("error pulling certs:", err)
 		}
