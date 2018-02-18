@@ -64,35 +64,42 @@ func ReadYamlFile(file string) (c *Config, err error) {
 }
 
 // GetServerPollInterval checks that the poll interval is set to a default.
-func GetServerPollInterval(config *Config) (time.Duration) {
+func GetServerPollInterval(config *Config) (
+	duration time.Duration, isZero bool) {
 	return getPollInterval("server", config)
 }
 
 // GetClientPollInterval checks that the poll interval is set to a default.
-func GetClientPollInterval(config *Config) (time.Duration) {
+func GetClientPollInterval(config *Config) (
+	duration time.Duration, isZero bool) {
 	return getPollInterval("client", config)
 }
 
 // getPollInterval gets a polling interval value out of the config, setting
 // it to a reasonable default if not set.
-func getPollInterval(section string, config *Config) (time.Duration) {
-	var duration time.Duration
-	var err error
+func getPollInterval(section string, config *Config) (
+		duration time.Duration, isZero bool) {
+	var timeValue string
 	switch section {
 	case "server":
-		duration, err = time.ParseDuration(config.Server.Poll_Interval)
+		timeValue = config.Server.Poll_Interval
 	case "client":
-		duration, err = time.ParseDuration(config.Client.Poll_Interval)
+		timeValue = config.Client.Poll_Interval
 	}
+	if timeValue == "" {
+		log.Infoln("running once, since no poll interval was set")
+		return 0, true
+	}
+	duration, err := time.ParseDuration(timeValue)
 	if err != nil {
 		log.Infoln("misconfigured poll interval, setting to 5m")
 		duration, _ = time.ParseDuration("5m")
-		return duration
+		return duration, false
 	}
 	tooShort := int64(duration) * 1000000 < 5
 	if tooShort {
 		log.Infoln("poll interval too short, setting to 5m")
 		duration, _ = time.ParseDuration("5m")
 	}
-	return duration
+	return duration, false
 }

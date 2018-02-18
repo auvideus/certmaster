@@ -32,12 +32,18 @@ func main() {
 		log.Fatalln("could not read config file", err)
 	}
 
-	duration := certmaster.GetClientPollInterval(config)
-	time.Sleep(10 * time.Second)
+	duration, isZero := certmaster.GetClientPollInterval(config)
+	log.Infoln("certmaster initialized")
+	if !isZero {
+		time.Sleep(10 * time.Second)
+	}
 	for {
 		err := certmaster.PullCerts(config.Client.Host, config.Client.Path)
 		if err != nil {
-			log.Error("error refreshing certs:", err)
+			log.Error("error pulling certs:", err)
+		}
+		if isZero {
+			return
 		}
 		time.Sleep(duration)
 	}
