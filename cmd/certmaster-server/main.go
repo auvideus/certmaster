@@ -23,7 +23,7 @@ func main() {
 
 	config, err := certmaster.ReadYamlFile(certmaster.ConfigPath)
 	if err != nil {
-		log.Fatalln("could not read config file", err)
+		log.Fatalln("could not read config file:", err)
 	}
 
 	duration, isZero := certmaster.GetServerPollInterval(config)
