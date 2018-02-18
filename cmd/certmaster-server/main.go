@@ -6,12 +6,13 @@ import (
 	"time"
 	log "github.com/sirupsen/logrus"
 	"github.com/auvideus/certmaster"
+	"github.com/auvideus/certmaster/cmd"
 )
 
 // Entrypoint of certmaster.  Calls certbot in a loop after reading the
 // configuration file.
 func main() {
-	certmaster.Initialize()
+	cmd.Initialize()
 
 	signalChannel := make(chan os.Signal)
 	signal.Notify(signalChannel, os.Interrupt)
