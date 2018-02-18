@@ -11,7 +11,8 @@ func RefreshCerts(config *Config) (ok bool) {
 	ok = true
 	for _, domain := range config.Domains {
 		allDomains := append([]string{domain.Name}, domain.Subdomains...)
-		_, err := callCertbot(config.Server.Email, allDomains)
+		_, err := callCertbot(
+			config.Server.Email, allDomains, config.Server.Dry_Run)
 		if err != nil {
 			ok = false
 			fmt.Errorf("error refreshing certs for domain %v: %v",
@@ -22,13 +23,16 @@ func RefreshCerts(config *Config) (ok bool) {
 }
 
 // callCertbot actually calls the certbot command for the given information.
-func callCertbot(email string, domains []string) (
+func callCertbot(email string, domains []string, dryRun bool) (
 	args string, err error) {
 	if email == "" || len(domains) < 1 {
 		return "", fmt.Errorf("email must not be empty")
 	}
 	var arguments []string
 	arguments = append(arguments, "certonly")
+	if dryRun {
+		arguments = append(arguments, "--dry-run")
+	}
 	arguments = append(arguments, "--non-interactive")
 	arguments = append(arguments, "--manual-public-ip-logging-ok")
 	arguments = append(arguments, "--agree-tos")
