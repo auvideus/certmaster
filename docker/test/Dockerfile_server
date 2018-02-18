@@ -1,0 +1,3 @@
+FROM certmaster-server
+
+COPY docker/test/certmaster-server.yml .

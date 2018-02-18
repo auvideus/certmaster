@@ -1,0 +1,12 @@
+---
+server:
+  email: test@example.com
+  poll_interval: "5m"
+  dry_run: true
+digital_ocean:
+  token: faketoken
+domains:
+- name: example.com
+  subdomains:
+  - app.example.com
+- name: example2.com
