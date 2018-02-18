@@ -1,7 +1,6 @@
 ---
 server:
   email: test@example.com
-  poll_interval: "5m"
   dry_run: true
 digital_ocean:
   token: faketoken
