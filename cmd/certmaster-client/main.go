@@ -6,7 +6,6 @@ import (
 	"time"
 	log "github.com/sirupsen/logrus"
 	"github.com/auvideus/certmaster"
-	"flag"
 )
 
 // Entrypoint of certmaster.  Calls certbot in a loop after reading the

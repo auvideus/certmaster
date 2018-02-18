@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/auvideus/certmaster"
 	log "github.com/sirupsen/logrus"
-	"flag"
 )
 
 // Target of the certbot cleanup hook.

@@ -3,7 +3,6 @@ package main
 import (
 	log "github.com/sirupsen/logrus"
 	"github.com/auvideus/certmaster"
-	"flag"
 )
 
 // Target of the certbot auth-hook script.
