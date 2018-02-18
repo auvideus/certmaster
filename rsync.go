@@ -4,6 +4,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"fmt"
 	"errors"
+	"strings"
 )
 
 // PullCerts calls the rsync command internally to pull the certs.
@@ -14,6 +15,16 @@ func PullCerts(host string, path string, dryRun bool) error {
 	var arguments []string
 	arguments = append(arguments, "--archive")
 	arguments = append(arguments, "--verbose")
+	arguments = append(arguments, "--itemize-changes")
+	arguments = append(arguments, strings.Join(
+		[]string{
+			"-e 'ssh",
+			"-o StrictHostKeyChecking=no",
+			"-o BatchMode=yes",
+			"-o IdentityFile=~/.ssh/id_rsa_certmaster",
+			"-o UserKnownHostsFile=/dev/null",
+			"'"},
+		" "))
 	arguments = append(arguments, host + ":" + path + "/")
 	arguments = append(arguments, "/etc/letsencrypt")
 
