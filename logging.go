@@ -1,13 +1,14 @@
 package certmaster
 
 import (
-	"gopkg.in/gemnasium/logrus-graylog-hook.v2"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"gopkg.in/gemnasium/logrus-graylog-hook.v2"
 )
 
 // Initialize will enable Graylog testing if the environment is set.
 func Initialize() {
+	log.SetOutput(os.Stdout)
 	graylogEndpoint := os.Getenv("GRAYLOG_ENDPOINT")
 	if graylogEndpoint == "" {
 		return

@@ -56,8 +56,6 @@ func CreateChallengeRecord(config *Config) error {
 
 	if config.Server.Dry_Run {
 		log.Infoln("because of dry run, not actually creating record")
-		os.Setenv(
-			"CERTBOT_AUTH_OUTPUT", authPrefix + "00000000")
 		log.Infoln(authPrefix + "00000000")
 		return nil
 	}
@@ -116,6 +114,7 @@ func DeleteChallengeRecord(config *Config) error {
 	log.Infoln("deleting record for " + domain)
 	if config.Server.Dry_Run {
 		log.Infoln("because of dry run, not actually deleting record")
+		return nil
 	}
 	_, err := client.Domains.DeleteRecord(
 		context.TODO(),

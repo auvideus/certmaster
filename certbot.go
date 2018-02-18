@@ -30,9 +30,6 @@ func callCertbot(email string, domains []string, dryRun bool) (
 	}
 	var arguments []string
 	arguments = append(arguments, "certonly")
-	if dryRun {
-		arguments = append(arguments, "--dry-run")
-	}
 	arguments = append(arguments, "--non-interactive")
 	arguments = append(arguments, "--manual-public-ip-logging-ok")
 	arguments = append(arguments, "--agree-tos")
@@ -49,6 +46,9 @@ func callCertbot(email string, domains []string, dryRun bool) (
 
 	log.Infoln("certbot arguments:", arguments)
 
+	if dryRun {
+		return "", nil
+	}
 	out, err := execCommand("certbot", arguments...).CombinedOutput()
 	log.Infoln(string(out))
 	if err != nil {
