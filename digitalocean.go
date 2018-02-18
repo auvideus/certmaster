@@ -53,6 +53,11 @@ func CreateChallengeRecord(config *Config) error {
 			"missing CERTBOT_VALIDATION environment variable")
 	}
 	log.Infoln("creating record for " + domain)
+
+	if config.Server.Dry_Run {
+		log.Infoln("because of dry run, not actually creating record")
+		return nil
+	}
 	record, _, err := client.Domains.CreateRecord(
 		context.TODO(),
 		domain,
@@ -106,6 +111,9 @@ func DeleteChallengeRecord(config *Config) error {
 
 	domain := os.Getenv("CERTBOT_DOMAIN")
 	log.Infoln("deleting record for " + domain)
+	if config.Server.Dry_Run {
+		log.Infoln("because of dry run, not actually deleting record")
+	}
 	_, err := client.Domains.DeleteRecord(
 		context.TODO(),
 		domain,
