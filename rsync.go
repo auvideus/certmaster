@@ -20,12 +20,12 @@ func PullCerts(host string, path string, dryRun bool) error {
 	arguments = append(arguments, "--itemize-changes")
 	arguments = append(arguments, strings.Join(
 		[]string{
-			"-e ' " + sshPath,
+			"-e \" " + sshPath,
 			"-o StrictHostKeyChecking=no",
 			"-o BatchMode=yes",
 			"-o IdentityFile=/root/.ssh/id_rsa_certmaster",
 			"-o UserKnownHostsFile=/dev/null",
-			"'"},
+			"\""},
 		" "))
 	arguments = append(arguments, host + ":" + path + "/")
 	arguments = append(arguments, "/etc/letsencrypt")
