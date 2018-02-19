@@ -4,11 +4,6 @@ WORKDIR /go/src/github.com/auvideus/certmaster
 
 COPY . .
 
-ADD hooks/pre.sh .
-ADD hooks/post.sh .
-
-RUN chmod +x pre.sh post.sh
-
 RUN go get -d -v github.com/auvideus/certmaster/cmd/certmaster-server \
     && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-authhook \
     && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-cleanuphook \
@@ -21,6 +16,11 @@ FROM golang:1.9-alpine3.7 as runner
 RUN apk add --update --no-cache certbot
 
 COPY --from=builder /go/bin/certmaster-* /bin/
+
+ADD hooks/pre.sh .
+ADD hooks/post.sh .
+
+RUN chmod +x pre.sh post.sh
 
 WORKDIR /etc/certmaster
 
