@@ -14,7 +14,7 @@ import (
 
 const (
 	authPrefix = "authhook_result: "
-	authPattern = ".*" + authPrefix + "(.*)"
+	authPattern = ".*" + authPrefix + "([:digit:]+).*"
 	recordTag = "certmaster"
 	recordNamePrefix = "_acme-challenge"
 	recordType = "TXT"
@@ -101,7 +101,9 @@ func DeleteChallengeRecord(config *Config) error {
 	re := regexp.MustCompile(authPattern)
 	for _, line := range authOutputLines {
 		if re.MatchString(line) {
-			authOutputID, _ = strconv.Atoi(re.FindStringSubmatch(line)[1])
+			authOutputStr := re.FindStringSubmatch(line)[1]
+			authOutputID, _ = strconv.Atoi(authOutputStr)
+			log.Infoln("found record id " + authOutputStr)
 			break
 		}
 	}
