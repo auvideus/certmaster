@@ -4,6 +4,11 @@ WORKDIR /go/src/github.com/auvideus/certmaster
 
 COPY . .
 
+ADD hooks/pre.sh .
+ADD hooks/post.sh .
+
+RUN chmod +x pre.sh post.sh
+
 RUN go get -d -v github.com/auvideus/certmaster/cmd/certmaster-server \
     && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-authhook \
     && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-cleanuphook \
@@ -18,9 +23,6 @@ RUN apk add --update --no-cache certbot
 COPY --from=builder /go/bin/certmaster-* /bin/
 
 WORKDIR /etc/certmaster
-
-ADD hooks/pre.sh .
-ADD hooks/post.sh .
 
 VOLUME /etc/letsencrypt
 
