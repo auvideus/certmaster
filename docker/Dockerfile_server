@@ -4,9 +4,9 @@ WORKDIR /go/src/github.com/auvideus/certmaster
 
 COPY . .
 
-RUN go get -d -v ./cmd/certmaster-server \
-    && go get -d -v ./cmd/certmaster-authhook \
-    && go get -d -v ./cmd/certmaster-cleanuphook \
+RUN go get -d -v github.com/auvideus/certmaster/cmd/certmaster-server \
+    && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-authhook \
+    && go get -d -v github.com/auvideus/certmaster/cmd/certmaster-cleanuphook \
     && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-server \
     && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-authhook \
     && CGO_ENABLED=0 GOOS=linux go install -v ./cmd/certmaster-cleanuphook
