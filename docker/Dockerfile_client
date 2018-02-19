@@ -9,7 +9,7 @@ RUN go get -d -v ./cmd/certmaster-client \
 
 FROM golang:1.9-alpine3.7 as runner
 
-RUN apk add --update --no-cache rsync
+RUN apk add --update --no-cache rsync openssh
 
 COPY --from=builder /go/bin/certmaster-* /bin/
 
