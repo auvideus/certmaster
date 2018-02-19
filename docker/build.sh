@@ -15,6 +15,7 @@ echo -e "\n-----> RUNNING CLIENT TEST\n"
 docker run -t certmaster-client-test
 
 if [[ -v DOCKER_PASSWORD ]]; then
+    echo -e "\n-----> PUSHING IMAGES\n"
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     docker push "$DOCKER_USERNAME"/certmaster-server
     docker push "$DOCKER_USERNAME"/certmaster-client
