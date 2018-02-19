@@ -7,7 +7,4 @@ services:
 - docker
 script:
 - go test
-- ./docker/test.sh
-- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-- docker push "$DOCKER_USERNAME"/certmaster-server
-- docker push "$DOCKER_USERNAME"/certmaster-client
+- ./docker/build.sh
