@@ -35,7 +35,7 @@ func main() {
 		err := certmaster.PullCerts(
 			config.Client.Host, config.Client.Path, config.Client.Dry_Run)
 		if err != nil {
-			log.Error("error pulling certs:", err)
+			log.Error("error pulling certs: ", err)
 		}
 		if isZero {
 			return

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"errors"
 	"strings"
+	"os/exec"
 )
 
 // PullCerts calls the rsync command internally to pull the certs.
@@ -12,16 +13,17 @@ func PullCerts(host string, path string, dryRun bool) error {
 	if host == "" || path == "" {
 		return errors.New("host and path must be given")
 	}
+	sshPath, _ := exec.LookPath("ssh")
 	var arguments []string
 	arguments = append(arguments, "--archive")
 	arguments = append(arguments, "--verbose")
 	arguments = append(arguments, "--itemize-changes")
 	arguments = append(arguments, strings.Join(
 		[]string{
-			"-e 'ssh",
+			"-e ' " + sshPath,
 			"-o StrictHostKeyChecking=no",
 			"-o BatchMode=yes",
-			"-o IdentityFile=~/.ssh/id_rsa_certmaster",
+			"-o IdentityFile=/root/.ssh/id_rsa_certmaster",
 			"-o UserKnownHostsFile=/dev/null",
 			"'"},
 		" "))
