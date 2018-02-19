@@ -17,12 +17,12 @@ RUN apk add --update --no-cache certbot
 
 COPY --from=builder /go/bin/certmaster-* /bin/
 
+WORKDIR /etc/certmaster
+
 ADD hooks/pre.sh .
 ADD hooks/post.sh .
 
 RUN chmod +x pre.sh post.sh
-
-WORKDIR /etc/certmaster
 
 VOLUME /etc/letsencrypt
 
