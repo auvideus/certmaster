@@ -19,7 +19,7 @@ COPY --from=builder /go/bin/certmaster-* /bin/
 
 WORKDIR /etc/certmaster
 
-ADD docker/ssh_config /root/.ssh/config
+ADD docker/ssh_config /root/.ssh/
 ADD hooks/pre.sh .
 ADD hooks/post.sh .
 
