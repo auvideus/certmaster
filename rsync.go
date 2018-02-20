@@ -18,14 +18,16 @@ func PullCerts(host string, path string, dryRun bool) error {
 	arguments = append(arguments, "--archive")
 	arguments = append(arguments, "--verbose")
 	arguments = append(arguments, "--itemize-changes")
+	arguments = append(arguments, "-e")
 	arguments = append(arguments, strings.Join(
 		[]string{
-			"-e \" " + sshPath,
+			"'",
+			sshPath,
 			"-o StrictHostKeyChecking=no",
 			"-o BatchMode=yes",
 			"-o IdentityFile=/root/.ssh/id_rsa_certmaster",
 			"-o UserKnownHostsFile=/dev/null",
-			"\""},
+			"'"},
 		" "))
 	arguments = append(arguments, host + ":" + path + "/")
 	arguments = append(arguments, "/etc/letsencrypt")
