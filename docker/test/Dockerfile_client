@@ -1,3 +1,3 @@
-FROM certmaster-client:latest
+FROM auvideus/certmaster-client:latest
 
 COPY docker/test/certmaster-client.yml /etc/certmaster/certmaster.yml

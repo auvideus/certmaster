@@ -1,0 +1,5 @@
+Host *
+    StrictHostKeyChecking no
+    BatchMode yes
+    IdentityFile /root/.ssh/id_rsa_certmaster
+    UserKnownHostsFile /dev/null
